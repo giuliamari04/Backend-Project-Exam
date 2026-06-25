@@ -65,7 +65,7 @@ or run the `EventhubApplication` class directly from your IDE.
 ## Postman Collection
 
 ```
-EventHub.postman_collection.json
+postman\EventHub Backend Exam.postman_collection.json
 ```
 
 ## Author
