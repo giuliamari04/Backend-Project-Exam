@@ -1,0 +1,1275 @@
+{
+  "info": {
+    "_postman_id": "dfdb62b0-2caa-4919-bf4f-1265b1baae53",
+    "name": "EventHub Backend Exam",
+    "description": "### Welcome to Postman! This is your first collection. \n\nCollections are your starting point for building and testing APIs. You can use this one to:\n\n• Group related requests\n• Test your API in real-world scenarios\n• Document and share your requests\n\nUpdate the name and overview whenever you’re ready to make it yours.\n\n[Learn more about Postman Collections.](https://learning.postman.com/docs/collections/collections-overview/)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "54592659",
+    "_collection_link": "https://go.postman.co/collection/54592659-dfdb62b0-2caa-4919-bf4f-1265b1baae53?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Register successful\", function () {\r",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);\r",
+                  "});\r",
+                  "\r",
+                  "pm.environment.set(\"userToken\", pm.response.json().token);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Mario\",\r\n  \"surname\": \"Rossi\",\r\n  \"email\": \"mario@test2.com\",\r\n  \"password\": \"password123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/register",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.environment.set(\"userToken\", pm.response.json().token);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"email\": \"mario@test.com\",\r\n  \"password\": \"password123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login Organizer",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.environment.set(\"organizerToken\", pm.response.json().token);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"email\": \"organizer@eventhub.com\",\r\n  \"password\": \"organizer123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login Admin",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.environment.set(\"adminToken\", pm.response.json().token);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"email\": \"admin@eventhub.com\",\r\n  \"password\": \"admin123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "GET Users",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBldmVudGh1Yi5jb20iLCJpYXQiOjE3ODA5MzY3NzQsImV4cCI6MTc4MTAyMzE3NH0.w12CM6deF7m0O9aLsL6qdo-x1ZR9ZI4TKbAUTRKJvgU",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/users",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"User created\", function () {\r",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvcmdhbml6ZXJAZXZlbnRodWIuY29tIiwiaWF0IjoxNzgwOTMzMDA3LCJleHAiOjE3ODEwMTk0MDd9.xQMUckjb4AGxx95Go8zNxZl89Ra7r8asoMvUKC-uvjQ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Silvio2\",\r\n  \"surname\": \"Oganizer\",\r\n  \"email\": \"silvio2.organizer@test.com\",\r\n  \"password\": \"password123\",\r\n  \"role\": \"USER\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete User",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBldmVudGh1Yi5jb20iLCJpYXQiOjE3ODA5Mzk0MDIsImV4cCI6MTc4MTAyNTgwMn0.OIFm_F56QbOdVqtjxoDAAhZ21qSK3nSs6wgcBn_LHIM",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Silvio2\",\r\n  \"surname\": \"Oganizer\",\r\n  \"email\": \"silvio2.organizer@test.com\",\r\n  \"password\": \"password123\",\r\n  \"role\": \"USER\"\r\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users/6",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                "6"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Change ImageProfile",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auth_secret_18yf}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"profileImage\": \"/images/profile-mario.png\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users/me/image",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                "me",
+                "image"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Categories",
+      "item": [
+        {
+          "name": "Create Category",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.environment.set(\"categoryId\", pm.response.json().id);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvcmdhbml6ZXJAZXZlbnRodWIuY29tIiwiaWF0IjoxNzgwOTMzMDA3LCJleHAiOjE3ODEwMTk0MDd9.xQMUckjb4AGxx95Go8zNxZl89Ra7r8asoMvUKC-uvjQ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Music\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/categories",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "categories"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET categories",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpb0B0ZXN0LmNvbSIsImlhdCI6MTc4MDkzMjE2OSwiZXhwIjoxNzgxMDE4NTY5fQ.XLzWU7tqQ6uzzfbu4cB69Jiee-2HE22RMdaWibo9fJo",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{baseUrl}}/categories",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "categories"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Events",
+      "item": [
+        {
+          "name": "Create Physical Event",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvcmdhbml6ZXJAZXZlbnRodWIuY29tIiwiaWF0IjoxNzgwOTMzMDA3LCJleHAiOjE3ODEwMTk0MDd9.xQMUckjb4AGxx95Go8zNxZl89Ra7r8asoMvUKC-uvjQ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"title\": \"Evento Solitario\",\r\n  \"description\": \"Evento fisico con coordinate automatiche\",\r\n  \"date\": \"2026-06-25T18:00:00\",\r\n  \"capacity\": 1,\r\n  \"address\": \"Sempione\",\r\n  \"city\": \"Milano\",\r\n  \"country\": \"Italia\",\r\n  \"categoryId\": 1,\r\n  \"maxParticipants\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/events/physical",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "events",
+                "physical"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Online Event",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.environment.set(\"onlineEventId\", pm.response.json().id);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvcmdhbml6ZXJAZXZlbnRodWIuY29tIiwiaWF0IjoxNzgwOTMzMDA3LCJleHAiOjE3ODEwMTk0MDd9.xQMUckjb4AGxx95Go8zNxZl89Ra7r8asoMvUKC-uvjQ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"title\": \"Spring Boot Webinar\",\r\n  \"description\": \"Evento online su Spring Security e JWT\",\r\n  \"date\": \"2026-06-26T18:00:00\",\r\n  \"capacity\": 50,\r\n  \"meetingLink\": \"https://meet.jit.si/eventhub-spring\",\r\n  \"categoryId\": 1,\r\n  \"maxParticipants\": 50\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/events/online",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "events",
+                "online"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET events",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvcmdhbml6ZXJAZXZlbnRodWIuY29tIiwiaWF0IjoxNzgwOTMzMDA3LCJleHAiOjE3ODEwMTk0MDd9.xQMUckjb4AGxx95Go8zNxZl89Ra7r8asoMvUKC-uvjQ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/events",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "events"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET PhysicalEvent",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvcmdhbml6ZXJAZXZlbnRodWIuY29tIiwiaWF0IjoxNzgwOTMzMDA3LCJleHAiOjE3ODEwMTk0MDd9.xQMUckjb4AGxx95Go8zNxZl89Ra7r8asoMvUKC-uvjQ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/events/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "events",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET upcoming Event",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvcmdhbml6ZXJAZXZlbnRodWIuY29tIiwiaWF0IjoxNzgwOTMzMDA3LCJleHAiOjE3ODEwMTk0MDd9.xQMUckjb4AGxx95Go8zNxZl89Ra7r8asoMvUKC-uvjQ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/events/upcoming",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "events",
+                "upcoming"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET category Event",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvcmdhbml6ZXJAZXZlbnRodWIuY29tIiwiaWF0IjoxNzgwOTMzMDA3LCJleHAiOjE3ODEwMTk0MDd9.xQMUckjb4AGxx95Go8zNxZl89Ra7r8asoMvUKC-uvjQ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/events/category/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "events",
+                "category",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET city Event",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvcmdhbml6ZXJAZXZlbnRodWIuY29tIiwiaWF0IjoxNzgwOTMzMDA3LCJleHAiOjE3ODEwMTk0MDd9.xQMUckjb4AGxx95Go8zNxZl89Ra7r8asoMvUKC-uvjQ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/events/city/Milano",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "events",
+                "city",
+                "Milano"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET search Event",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvcmdhbml6ZXJAZXZlbnRodWIuY29tIiwiaWF0IjoxNzgwOTMzMDA3LCJleHAiOjE3ODEwMTk0MDd9.xQMUckjb4AGxx95Go8zNxZl89Ra7r8asoMvUKC-uvjQ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/events/search?title=milano",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "events",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "title",
+                  "value": "milano"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET sort Event",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvcmdhbml6ZXJAZXZlbnRodWIuY29tIiwiaWF0IjoxNzgwOTMzMDA3LCJleHAiOjE3ODEwMTk0MDd9.xQMUckjb4AGxx95Go8zNxZl89Ra7r8asoMvUKC-uvjQ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/events/sort/date",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "events",
+                "sort",
+                "date"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET sold-out Event",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvcmdhbml6ZXJAZXZlbnRodWIuY29tIiwiaWF0IjoxNzgwOTMzMDA3LCJleHAiOjE3ODEwMTk0MDd9.xQMUckjb4AGxx95Go8zNxZl89Ra7r8asoMvUKC-uvjQ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/events/sold-out",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "events",
+                "sold-out"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Bookings",
+      "item": [
+        {
+          "name": "Book Event",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.environment.set(\"bookingId\", pm.response.json().id);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpb0B0ZXN0LmNvbSIsImlhdCI6MTc4MDkzMjE2OSwiZXhwIjoxNzgxMDE4NTY5fQ.XLzWU7tqQ6uzzfbu4cB69Jiee-2HE22RMdaWibo9fJo",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{baseUrl}}/bookings/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "bookings",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "My Bookings",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvcmdhbml6ZXJAZXZlbnRodWIuY29tIiwiaWF0IjoxNzgwOTMzMDA3LCJleHAiOjE3ODEwMTk0MDd9.xQMUckjb4AGxx95Go8zNxZl89Ra7r8asoMvUKC-uvjQ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{baseUrl}}/bookings/my",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "bookings",
+                "my"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE Booking",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpb0B0ZXN0LmNvbSIsImlhdCI6MTc4MDkzMjE2OSwiZXhwIjoxNzgxMDE4NTY5fQ.XLzWU7tqQ6uzzfbu4cB69Jiee-2HE22RMdaWibo9fJo",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{baseUrl}}/bookings/3",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "bookings",
+                "3"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Reviews",
+      "item": [
+        {
+          "name": "Create Review",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.environment.set(\"reviewId\", pm.response.json().id);\r",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvcmdhbml6ZXJAZXZlbnRodWIuY29tIiwiaWF0IjoxNzgwOTMzMDA3LCJleHAiOjE3ODEwMTk0MDd9.xQMUckjb4AGxx95Go8zNxZl89Ra7r8asoMvUKC-uvjQ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"eventId\": 1,\r\n  \"rating\": 5,\r\n  \"comment\": \"Evento molto ben organizzato!\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/reviews",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "reviews"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET physical event Review",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvcmdhbml6ZXJAZXZlbnRodWIuY29tIiwiaWF0IjoxNzgwOTMzMDA3LCJleHAiOjE3ODEwMTk0MDd9.xQMUckjb4AGxx95Go8zNxZl89Ra7r8asoMvUKC-uvjQ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"eventId\": 1,\r\n  \"rating\": 5,\r\n  \"comment\": \"Evento molto ben organizzato!\"\r\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/reviews/event/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "reviews",
+                "event",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET average event Review",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvcmdhbml6ZXJAZXZlbnRodWIuY29tIiwiaWF0IjoxNzgwOTMzMDA3LCJleHAiOjE3ODEwMTk0MDd9.xQMUckjb4AGxx95Go8zNxZl89Ra7r8asoMvUKC-uvjQ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{baseUrl}}/reviews/event/1/average",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "reviews",
+                "event",
+                "1",
+                "average"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET my Reviews",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvcmdhbml6ZXJAZXZlbnRodWIuY29tIiwiaWF0IjoxNzgwOTMzMDA3LCJleHAiOjE3ODEwMTk0MDd9.xQMUckjb4AGxx95Go8zNxZl89Ra7r8asoMvUKC-uvjQ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/reviews/my",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "reviews",
+                "my"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE Review",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvcmdhbml6ZXJAZXZlbnRodWIuY29tIiwiaWF0IjoxNzgwOTMzMDA3LCJleHAiOjE3ODEwMTk0MDd9.xQMUckjb4AGxx95Go8zNxZl89Ra7r8asoMvUKC-uvjQ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/reviews/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "reviews",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Notifications",
+      "item": [
+        {
+          "name": "GET Notification",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let notifications = pm.response.json();\r",
+                  "\r",
+                  "if (notifications.length > 0) {\r",
+                  "    pm.environment.set(\"notificationId\", notifications[0].id);\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvcmdhbml6ZXJAZXZlbnRodWIuY29tIiwiaWF0IjoxNzgwOTMzMDA3LCJleHAiOjE3ODEwMTk0MDd9.xQMUckjb4AGxx95Go8zNxZl89Ra7r8asoMvUKC-uvjQ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/notifications/my",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "notifications",
+                "my"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Notification unread",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvcmdhbml6ZXJAZXZlbnRodWIuY29tIiwiaWF0IjoxNzgwOTMzMDA3LCJleHAiOjE3ODEwMTk0MDd9.xQMUckjb4AGxx95Go8zNxZl89Ra7r8asoMvUKC-uvjQ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/notifications/my/unread",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "notifications",
+                "my",
+                "unread"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PATCH Notification",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvcmdhbml6ZXJAZXZlbnRodWIuY29tIiwiaWF0IjoxNzgwOTMzMDA3LCJleHAiOjE3ODEwMTk0MDd9.xQMUckjb4AGxx95Go8zNxZl89Ra7r8asoMvUKC-uvjQ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/notifications/1/read",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "notifications",
+                "1",
+                "read"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE Notification",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvcmdhbml6ZXJAZXZlbnRodWIuY29tIiwiaWF0IjoxNzgwOTMzMDA3LCJleHAiOjE3ODEwMTk0MDd9.xQMUckjb4AGxx95Go8zNxZl89Ra7r8asoMvUKC-uvjQ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/notifications/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "notifications",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Weather",
+      "item": [
+        {
+          "name": "GET Weather Event",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvcmdhbml6ZXJAZXZlbnRodWIuY29tIiwiaWF0IjoxNzgwOTMzMDA3LCJleHAiOjE3ODEwMTk0MDd9.xQMUckjb4AGxx95Go8zNxZl89Ra7r8asoMvUKC-uvjQ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/weather/event/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "weather",
+                "event",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Geocoding",
+      "item": [
+        {
+          "name": "GET Geocoding",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvcmdhbml6ZXJAZXZlbnRodWIuY29tIiwiaWF0IjoxNzgwOTMzMDA3LCJleHAiOjE3ODEwMTk0MDd9.xQMUckjb4AGxx95Go8zNxZl89Ra7r8asoMvUKC-uvjQ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/geocoding?address=Piazza%20del%20Duomo&city=Milano&country=Italia",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "geocoding"
+              ],
+              "query": [
+                {
+                  "key": "address",
+                  "value": "Piazza%20del%20Duomo"
+                },
+                {
+                  "key": "city",
+                  "value": "Milano"
+                },
+                {
+                  "key": "country",
+                  "value": "Italia"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "auth_secret_18yf",
+      "secret": true
+    }
+  ]
+}
