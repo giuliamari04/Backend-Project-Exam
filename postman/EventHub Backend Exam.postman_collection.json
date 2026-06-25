@@ -38,7 +38,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"name\": \"Mario\",\r\n  \"surname\": \"Rossi\",\r\n  \"email\": \"mario@test2.com\",\r\n  \"password\": \"password123\"\r\n}",
+              "raw": "{\r\n  \"name\": \"Mario\",\r\n  \"surname\": \"Rossi\",\r\n  \"email\": \"mario@test.com\",\r\n  \"password\": \"password123\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -74,6 +74,9 @@
             }
           ],
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "POST",
             "header": [],
             "body": {
@@ -145,7 +148,8 @@
               "listen": "test",
               "script": {
                 "exec": [
-                  "pm.environment.set(\"adminToken\", pm.response.json().token);"
+                  "const response = pm.response.json();\r",
+                  "pm.collectionVariables.set(\"adminToken\", response.token);"
                 ],
                 "type": "text/javascript",
                 "packages": {},
@@ -194,7 +198,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBldmVudGh1Yi5jb20iLCJpYXQiOjE3ODA5MzY3NzQsImV4cCI6MTc4MTAyMzE3NH0.w12CM6deF7m0O9aLsL6qdo-x1ZR9ZI4TKbAUTRKJvgU",
+                  "value": "{{adminToken}}",
                   "type": "string"
                 }
               ]
@@ -236,7 +240,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvcmdhbml6ZXJAZXZlbnRodWIuY29tIiwiaWF0IjoxNzgwOTMzMDA3LCJleHAiOjE3ODEwMTk0MDd9.xQMUckjb4AGxx95Go8zNxZl89Ra7r8asoMvUKC-uvjQ",
+                  "value": "{{adminToken}}",
                   "type": "string"
                 }
               ]
@@ -245,7 +249,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"name\": \"Silvio2\",\r\n  \"surname\": \"Oganizer\",\r\n  \"email\": \"silvio2.organizer@test.com\",\r\n  \"password\": \"password123\",\r\n  \"role\": \"USER\"\r\n}",
+              "raw": "{\r\n  \"name\": \"Silvio\",\r\n  \"surname\": \"Verdi\",\r\n  \"email\": \"silvio.verdi@test.com\",\r\n  \"password\": \"password123\",\r\n  \"role\": \"USER\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -272,7 +276,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBldmVudGh1Yi5jb20iLCJpYXQiOjE3ODA5Mzk0MDIsImV4cCI6MTc4MTAyNTgwMn0.OIFm_F56QbOdVqtjxoDAAhZ21qSK3nSs6wgcBn_LHIM",
+                  "value": "{{adminToken}}",
                   "type": "string"
                 }
               ]
@@ -281,16 +285,21 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"name\": \"Silvio2\",\r\n  \"surname\": \"Oganizer\",\r\n  \"email\": \"silvio2.organizer@test.com\",\r\n  \"password\": \"password123\",\r\n  \"role\": \"USER\"\r\n}"
+              "raw": "{\r\n  \"name\": \"Silvio\",\r\n  \"surname\": \"Verdi\",\r\n  \"email\": \"silvio.verdi@test.com\",\r\n  \"password\": \"password123\",\r\n  \"role\": \"USER\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
             "url": {
-              "raw": "{{baseUrl}}/users/6",
+              "raw": "{{baseUrl}}/users/5",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "users",
-                "6"
+                "5"
               ]
             }
           },
@@ -304,7 +313,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "{{auth_secret_18yf}}",
+                  "value": "{{userToken}}",
                   "type": "string"
                 }
               ]
@@ -313,7 +322,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"profileImage\": \"/images/profile-mario.png\"\r\n}",
+              "raw": "{\r\n    \"profileImage\": \"/images/mario-image.png\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -329,6 +338,79 @@
                 "users",
                 "me",
                 "image"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create User Organizer (by Admin)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{supabase_service_role_api_key_0pca}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Luca\",\r\n  \"surname\": \"Organizer\",\r\n  \"email\": \"luca.organizer@test.com\",\r\n  \"password\": \"password123\",\r\n  \"role\": \"ORGANIZER\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update User",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Mario Updated\",\r\n  \"surname\": \"Rossi Updated\",\r\n  \"email\": \"mario.updated@test.com\",\r\n  \"profileImage\": \"/images/new-mario-profile.png\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users/me",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                "me"
               ]
             }
           },
@@ -360,7 +442,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvcmdhbml6ZXJAZXZlbnRodWIuY29tIiwiaWF0IjoxNzgwOTMzMDA3LCJleHAiOjE3ODEwMTk0MDd9.xQMUckjb4AGxx95Go8zNxZl89Ra7r8asoMvUKC-uvjQ",
+                  "value": "{{organizerToken}}",
                   "type": "string"
                 }
               ]
@@ -369,7 +451,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"name\": \"Music\"\r\n}",
+              "raw": "{\r\n  \"name\": \"Tech\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -399,7 +481,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpb0B0ZXN0LmNvbSIsImlhdCI6MTc4MDkzMjE2OSwiZXhwIjoxNzgxMDE4NTY5fQ.XLzWU7tqQ6uzzfbu4cB69Jiee-2HE22RMdaWibo9fJo",
+                  "value": "{{userToken}}",
                   "type": "string"
                 }
               ]
@@ -435,7 +517,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvcmdhbml6ZXJAZXZlbnRodWIuY29tIiwiaWF0IjoxNzgwOTMzMDA3LCJleHAiOjE3ODEwMTk0MDd9.xQMUckjb4AGxx95Go8zNxZl89Ra7r8asoMvUKC-uvjQ",
+                  "value": "{{organizerToken}}",
                   "type": "string"
                 }
               ]
@@ -485,7 +567,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvcmdhbml6ZXJAZXZlbnRodWIuY29tIiwiaWF0IjoxNzgwOTMzMDA3LCJleHAiOjE3ODEwMTk0MDd9.xQMUckjb4AGxx95Go8zNxZl89Ra7r8asoMvUKC-uvjQ",
+                  "value": "{{organizerToken}}",
                   "type": "string"
                 }
               ]
@@ -522,7 +604,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvcmdhbml6ZXJAZXZlbnRodWIuY29tIiwiaWF0IjoxNzgwOTMzMDA3LCJleHAiOjE3ODEwMTk0MDd9.xQMUckjb4AGxx95Go8zNxZl89Ra7r8asoMvUKC-uvjQ",
+                  "value": "{{userToken}}",
                   "type": "string"
                 }
               ]
@@ -549,7 +631,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvcmdhbml6ZXJAZXZlbnRodWIuY29tIiwiaWF0IjoxNzgwOTMzMDA3LCJleHAiOjE3ODEwMTk0MDd9.xQMUckjb4AGxx95Go8zNxZl89Ra7r8asoMvUKC-uvjQ",
+                  "value": "{{userToken}}",
                   "type": "string"
                 }
               ]
@@ -577,7 +659,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvcmdhbml6ZXJAZXZlbnRodWIuY29tIiwiaWF0IjoxNzgwOTMzMDA3LCJleHAiOjE3ODEwMTk0MDd9.xQMUckjb4AGxx95Go8zNxZl89Ra7r8asoMvUKC-uvjQ",
+                  "value": "{{userToken}}",
                   "type": "string"
                 }
               ]
@@ -605,7 +687,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvcmdhbml6ZXJAZXZlbnRodWIuY29tIiwiaWF0IjoxNzgwOTMzMDA3LCJleHAiOjE3ODEwMTk0MDd9.xQMUckjb4AGxx95Go8zNxZl89Ra7r8asoMvUKC-uvjQ",
+                  "value": "{{userToken}}",
                   "type": "string"
                 }
               ]
@@ -634,7 +716,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvcmdhbml6ZXJAZXZlbnRodWIuY29tIiwiaWF0IjoxNzgwOTMzMDA3LCJleHAiOjE3ODEwMTk0MDd9.xQMUckjb4AGxx95Go8zNxZl89Ra7r8asoMvUKC-uvjQ",
+                  "value": "{{userToken}}",
                   "type": "string"
                 }
               ]
@@ -663,7 +745,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvcmdhbml6ZXJAZXZlbnRodWIuY29tIiwiaWF0IjoxNzgwOTMzMDA3LCJleHAiOjE3ODEwMTk0MDd9.xQMUckjb4AGxx95Go8zNxZl89Ra7r8asoMvUKC-uvjQ",
+                  "value": "{{userToken}}",
                   "type": "string"
                 }
               ]
@@ -671,7 +753,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{baseUrl}}/events/search?title=milano",
+              "raw": "{{baseUrl}}/events/search?title=Evento",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -682,7 +764,7 @@
               "query": [
                 {
                   "key": "title",
-                  "value": "milano"
+                  "value": "Evento"
                 }
               ]
             }
@@ -697,7 +779,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvcmdhbml6ZXJAZXZlbnRodWIuY29tIiwiaWF0IjoxNzgwOTMzMDA3LCJleHAiOjE3ODEwMTk0MDd9.xQMUckjb4AGxx95Go8zNxZl89Ra7r8asoMvUKC-uvjQ",
+                  "value": "{{userToken}}",
                   "type": "string"
                 }
               ]
@@ -726,7 +808,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvcmdhbml6ZXJAZXZlbnRodWIuY29tIiwiaWF0IjoxNzgwOTMzMDA3LCJleHAiOjE3ODEwMTk0MDd9.xQMUckjb4AGxx95Go8zNxZl89Ra7r8asoMvUKC-uvjQ",
+                  "value": "{{userToken}}",
                   "type": "string"
                 }
               ]
@@ -741,6 +823,80 @@
               "path": [
                 "events",
                 "sold-out"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Event Online",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{organizerToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"title\": \"Spring Boot Webinar Updated\",\r\n  \"description\": \"Evento online aggiornato\",\r\n  \"date\": \"2026-07-01T18:00:00\",\r\n  \"capacity\": 80,\r\n  \"maxParticipants\": 80,\r\n  \"meetingLink\": \"https://meet.jit.si/eventhub-updated\",\r\n  \"categoryId\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/events/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "events",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Event Physical",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "1234567891011{  \"title\": \"Evento Milano\",  \"description\": \"Evento fisico \",  \"date\": \"2026-07-02T18:00:00\",  \"capacity\": 100,  \"maxParticipants\": 100,  \"address\": \"Piazza del Duomo\",  \"city\": \"Milano\",  \"country\": \"Italia\",  \"categoryId\": 1}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"title\": \"Evento Milano Updated\",\r\n  \"description\": \"Evento fisico aggiornato\",\r\n  \"date\": \"2026-07-02T18:00:00\",\r\n  \"capacity\": 100,\r\n  \"maxParticipants\": 100,\r\n  \"address\": \"Piazza del Duomo\",\r\n  \"city\": \"Milano\",\r\n  \"country\": \"Italia\",\r\n  \"categoryId\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/events/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "events",
+                "1"
               ]
             }
           },
@@ -772,7 +928,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpb0B0ZXN0LmNvbSIsImlhdCI6MTc4MDkzMjE2OSwiZXhwIjoxNzgxMDE4NTY5fQ.XLzWU7tqQ6uzzfbu4cB69Jiee-2HE22RMdaWibo9fJo",
+                  "value": "{{userToken}}",
                   "type": "string"
                 }
               ]
@@ -807,7 +963,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvcmdhbml6ZXJAZXZlbnRodWIuY29tIiwiaWF0IjoxNzgwOTMzMDA3LCJleHAiOjE3ODEwMTk0MDd9.xQMUckjb4AGxx95Go8zNxZl89Ra7r8asoMvUKC-uvjQ",
+                  "value": "{{userToken}}",
                   "type": "string"
                 }
               ]
@@ -839,7 +995,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpb0B0ZXN0LmNvbSIsImlhdCI6MTc4MDkzMjE2OSwiZXhwIjoxNzgxMDE4NTY5fQ.XLzWU7tqQ6uzzfbu4cB69Jiee-2HE22RMdaWibo9fJo",
+                  "value": "{{userToken}}",
                   "type": "string"
                 }
               ]
@@ -851,13 +1007,13 @@
               "raw": ""
             },
             "url": {
-              "raw": "{{baseUrl}}/bookings/3",
+              "raw": "{{baseUrl}}/bookings/1",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "bookings",
-                "3"
+                "1"
               ]
             }
           },
@@ -890,7 +1046,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvcmdhbml6ZXJAZXZlbnRodWIuY29tIiwiaWF0IjoxNzgwOTMzMDA3LCJleHAiOjE3ODEwMTk0MDd9.xQMUckjb4AGxx95Go8zNxZl89Ra7r8asoMvUKC-uvjQ",
+                  "value": "{{userToken}}",
                   "type": "string"
                 }
               ]
@@ -929,7 +1085,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvcmdhbml6ZXJAZXZlbnRodWIuY29tIiwiaWF0IjoxNzgwOTMzMDA3LCJleHAiOjE3ODEwMTk0MDd9.xQMUckjb4AGxx95Go8zNxZl89Ra7r8asoMvUKC-uvjQ",
+                  "value": "{{userToken}}",
                   "type": "string"
                 }
               ]
@@ -965,7 +1121,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvcmdhbml6ZXJAZXZlbnRodWIuY29tIiwiaWF0IjoxNzgwOTMzMDA3LCJleHAiOjE3ODEwMTk0MDd9.xQMUckjb4AGxx95Go8zNxZl89Ra7r8asoMvUKC-uvjQ",
+                  "value": "{{userToken}}",
                   "type": "string"
                 }
               ]
@@ -999,7 +1155,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvcmdhbml6ZXJAZXZlbnRodWIuY29tIiwiaWF0IjoxNzgwOTMzMDA3LCJleHAiOjE3ODEwMTk0MDd9.xQMUckjb4AGxx95Go8zNxZl89Ra7r8asoMvUKC-uvjQ",
+                  "value": "{{userToken}}",
                   "type": "string"
                 }
               ]
@@ -1027,7 +1183,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvcmdhbml6ZXJAZXZlbnRodWIuY29tIiwiaWF0IjoxNzgwOTMzMDA3LCJleHAiOjE3ODEwMTk0MDd9.xQMUckjb4AGxx95Go8zNxZl89Ra7r8asoMvUKC-uvjQ",
+                  "value": "{{userToken}}",
                   "type": "string"
                 }
               ]
@@ -1077,7 +1233,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvcmdhbml6ZXJAZXZlbnRodWIuY29tIiwiaWF0IjoxNzgwOTMzMDA3LCJleHAiOjE3ODEwMTk0MDd9.xQMUckjb4AGxx95Go8zNxZl89Ra7r8asoMvUKC-uvjQ",
+                  "value": "{{userToken}}",
                   "type": "string"
                 }
               ]
@@ -1105,7 +1261,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvcmdhbml6ZXJAZXZlbnRodWIuY29tIiwiaWF0IjoxNzgwOTMzMDA3LCJleHAiOjE3ODEwMTk0MDd9.xQMUckjb4AGxx95Go8zNxZl89Ra7r8asoMvUKC-uvjQ",
+                  "value": "{{userToken}}",
                   "type": "string"
                 }
               ]
@@ -1134,7 +1290,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvcmdhbml6ZXJAZXZlbnRodWIuY29tIiwiaWF0IjoxNzgwOTMzMDA3LCJleHAiOjE3ODEwMTk0MDd9.xQMUckjb4AGxx95Go8zNxZl89Ra7r8asoMvUKC-uvjQ",
+                  "value": "{{userToken}}",
                   "type": "string"
                 }
               ]
@@ -1163,7 +1319,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvcmdhbml6ZXJAZXZlbnRodWIuY29tIiwiaWF0IjoxNzgwOTMzMDA3LCJleHAiOjE3ODEwMTk0MDd9.xQMUckjb4AGxx95Go8zNxZl89Ra7r8asoMvUKC-uvjQ",
+                  "value": "{{userToken}}",
                   "type": "string"
                 }
               ]
@@ -1196,7 +1352,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvcmdhbml6ZXJAZXZlbnRodWIuY29tIiwiaWF0IjoxNzgwOTMzMDA3LCJleHAiOjE3ODEwMTk0MDd9.xQMUckjb4AGxx95Go8zNxZl89Ra7r8asoMvUKC-uvjQ",
+                  "value": "{{userToken}}",
                   "type": "string"
                 }
               ]
@@ -1230,7 +1386,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvcmdhbml6ZXJAZXZlbnRodWIuY29tIiwiaWF0IjoxNzgwOTMzMDA3LCJleHAiOjE3ODEwMTk0MDd9.xQMUckjb4AGxx95Go8zNxZl89Ra7r8asoMvUKC-uvjQ",
+                  "value": "{{userToken}}",
                   "type": "string"
                 }
               ]
@@ -1270,6 +1426,30 @@
     {
       "key": "auth_secret_18yf",
       "secret": true
+    },
+    {
+      "key": "auth_secret_0ij9",
+      "secret": true
+    },
+    {
+      "key": "auth_secret_0s21",
+      "secret": true
+    },
+    {
+      "key": "supabase_service_role_api_key_0pca",
+      "secret": true
+    },
+    {
+      "key": "supabase_service_role_api_key_0dft",
+      "secret": true
+    },
+    {
+      "key": "supabase_service_role_api_key_0sds",
+      "secret": true
+    },
+    {
+      "key": "adminToken",
+      "value": ""
     }
   ]
 }
